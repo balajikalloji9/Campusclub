@@ -1,82 +1,95 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
- 
-class Change_password extends CI_Controller {
+<div class="main-content">
+				<div class="main-content-inner">
+					<div class="breadcrumbs" id="breadcrumbs">
+						<script type="text/javascript">
+							try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+						</script>
 
-	public $header_page= 'admin/includes/header';
-	public $footer_Page= 'admin/includes/footer';
-	public $leftMenu  = 'admin/includes/left_menu';
-	public $change_password_page = 'admin/change_password';
-	
-	public $pwd_redirect='/admin/change_password';
+						<ul class="breadcrumb">
+							<li>
+								<i class="ace-icon fa fa-home home-icon"></i>
+								<a href="<?php echo site_url();?>user/dashboard">Home</a>
+							</li>
 
-	public function __construct()
-	{
-	parent::__construct();
-	$this->load->model('admin/Change_password_model','my_model');
-	$this->load->model('Common_model','common_model');
-	checkAdminLogin();
-	 // if($this->session->userdata('admin_id') != 'ADM0001'){
-	 // $this->data['roleResponsible'] = $this->common_model->get_responsibilities();
-  //    }else{
-	 // $this->data['roleResponsible'] = $this->common_model->get_default_responsibilities();
-	 // }
-	}
+							<li class="active">Change Password</li>
+						</ul><!-- /.breadcrumb -->
 
-	public function index(){
+						
+					</div>
 
-		$this->data=array();
-		if($this->input->post('submit')!='')
-		{
-		
-			if($this->my_model->password_check() != 0)
-			{ 
-				if($this->input->post('conf_pwd') == $this->input->post('new_pwd')){
-					$changepass=$this->my_model->change_password_2();
-					
-					if($changepass)
-					{
-						$this->session->set_flashdata('success', 'Password has been Changed Sucessfully...');
-						redirect($this->pwd_redirect);
-					}
-					
-				}else{
-					$this->session->set_flashdata('error', 'You have entered new and cofirm password does not match');
-				    redirect($this->pwd_redirect);
-				}
-			}
-			else
-			{		
-				$this->session->set_flashdata('error', 'You have entered wrong Password,old records does not match..!');
-				redirect($this->pwd_redirect);
-			}
-		
-		}
-		// if($this->session->userdata('user_id') != 'ADM0001'){
-		//  $this->data['roleResponsible'] = $this->common_model->get_responsibilities();
-	 //     }else{
-		//  $this->data['roleResponsible'] = $this->common_model->get_default_responsibilities();
-		//  }
-		 $this->setHeaderFooter($this->change_password_page,$this->data);
-	}
+					<div class="page-content">
+						
 
-	
-	
+						<div class="page-header">
+							<h1 class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+								<i class="fa fa-key blue"></i>  Change <span class="blue"> Password </span>							
+							</h1>
+							
+						</div><!-- /.page-header -->
+						 <?php echo $message; ?>
+						<div class="row">
+							<div class="col-xs-12">
+								<!-- PAGE CONTENT BEGINS -->
+								 
+								<form class="form-horizontal" role="form" method="post" action="<?php echo base_url('user/change_password')?>">
+								<div class="col-lg-9 col-xs-12 col-sm-9 col-md-9 col-lg-offset-1">
+									<!---old-password-->
+									<div class="row">
+										<div class="form-group frm-btm">
+											<div class="col-lg-3 col-sm-3 col-md-3 col-xs-3">
+												<label class="input-text"> Old Password <span class="star">*</span></label>
+											</div>
+											<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 input-text"> : </div>
+											<div class="col-lg-7 col-md-7 col-sm-7 col-xs-12 word-brk">
+												<input class="form-control" type="password" name="cur_pwd" value="<?php echo set_value('cur_pwd'); ?>" placeholder="Old Password"  required>
+												<?php echo form_error('cur_pwd'); ?>
+											</div>
+										</div>
+									</div>
+									<!---old-password-end--->
+									<!---new--password---->
+									<div class="row">
+										<div class="form-group frm-btm">
+											<div class="col-lg-3 col-sm-3 col-md-3 col-xs-3">
+												<label class="input-text"> New Password <span class="star">*</span></label>
+											</div>
+											<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 input-text"> : </div>
+											<div class="col-lg-7 col-md-7 col-sm-7 col-xs-12 word-brk">
+												<input class="form-control" type="password" name="new_pwd" value="<?php echo set_value('new_pwd'); ?>" placeholder="New Password"  required>
+											<?php echo form_error('new_pwd'); ?>
+											</div>
+										</div>
+									</div>
+									<!---new--password-end--->
+									<!---confirm--password---->
+									<div class="row">
+										<div class="form-group ">
+											<div class="col-lg-3 col-sm-3 col-md-3 col-xs-3">
+												<label class="input-text"> Confirm Password <span class="star">*</span></label>
+											</div>
+											<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 input-text"> : </div>
+											<div class="col-lg-7 col-md-7 col-sm-7 col-xs-12 word-brk">
+												<input class="form-control" type="password" name="conf_pwd" value="<?php echo set_value('conf_pwd'); ?>" placeholder="Confirm New Password" required>
+												<?php echo form_error('conf_pwd'); ?>
+											</div>
+										</div>
+									</div>
+									<!---confirm--password-end--->
+				
+									
+									
+										</div>
+										<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 formfooter text-center">
+												<input type="submit" name="submit" id="add" class="btn btn-success btn-sm" value="Save" />	
+											</div>
+						</form>
 
-	/*-----------start setting header and footer --------------*/
-
-	public function setHeaderFooter($view, $data)
-	{	
-
-		$this->load->view($this->header_page, $data);
-		$this->load->view($this->leftMenu, $data);
-		$data['message']=$this->load->view('admin/includes/message',$data,TRUE);
-		$this->load->view($view, $data);
-		$this->load->view($this->footer_Page);
-	}
-  /*----------- stop setting header and footer --------------*/
-
-}
-
-
-?>
+								 
+								
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.page-content -->
+				</div>
+			</div><!-- /.main-content -->
+			
 
