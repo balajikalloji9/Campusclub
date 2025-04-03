@@ -12,8 +12,7 @@
 					<li class="active">Dashboard</li>
 				</ul><!-- /.breadcrumb -->						
 			</div>
-			<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
-    		<div class="page-content">						 
+			<div class="page-content">						 
 				<div class="page-header">
 					<?php 
 						if($this->session->flashdata('message')!=''){
@@ -29,168 +28,130 @@
 					<i class=" pull-left blue fa fa-dashboard"></i>
 						Dashboard  
 					</h1>
+					<!-- <div class="pull-right">								
+						<a class="btn btn-success btn-sm" href="<?php echo site_url();?>master/hyderabad_city_tour_booking_data" type="button"><i class="fa fa-bar-chart fa-lg"></i> </a>
+						<a class="btn btn-warning btn-sm" href="<?php echo site_url();?>master/ramoji_film_city_booking_data" type="button"><i class="fa fa-bar-chart fa-lg"></i>  </a>
+						 <input type="hidden" name="hiv" id="hiv" value="0" />
+	               </div> -->
+				</div><!-- /.page-header -->
+				<div class="row">
+					<div class="col-md-3 col-xs-12 col-lg-3 col-sm-3">
+						<div class="widget-item-icon" onclick="location.href='<?php echo base_url('admin/users')?>';" style="color:blue">
+							<div class="edu_color_boxes box_left">
+	    						<div class="edu_dash_box_data">
+	    							   <h4><b>Users</b></h4>
+	    							   <p><span><b><?php echo $users_count;?></b></span></p>	
+	    						</div>
+	    						<div class="edu_dash_box_icon">
+									<i class="fa fa-cog" aria-hidden="true"></i>
+	    						</div>
+	    					</div>                                  
+				        </div>
+					</div>
+
+					<?php foreach($sports as $sport){?>
+					<div class="col-md-3 col-xs-12 col-lg-3 col-sm-3">
+						<div class="widget-item-icon" onclick="location.href='<?php echo base_url('admin/batchs')?>';" style="color:blue">
+							<div class="edu_color_boxes box_left">
+	    						<div class="edu_dash_box_data">
+
+	    							   <h4><b><?php echo $sport['name']?></b></h4>
+
+	    							   <ul><a href="<?php echo base_url('admin/bookings/all').'/'.$sport['id']?>"><span><b><?php $sport_id=$sport['id'];
+$booking_count=$this->db->query('select id from bookings where sport_id='.$sport_id.'')->result_array();
+	    							    echo count($booking_count);?></b></span></a></ul>	
+	    						</div>
+	    						<div class="edu_dash_box_icon">
+									<i class="fa fa-futbol-o" aria-hidden="true"></i>
+	    						</div>
+	    					</div>                                    
+				        </div>
+					</div><!-- /.col -->
+				<?php }?>
+					
 				
+					<!--<div class="col-md-3 col-xs-12 col-lg-3 col-sm-3">
+						<div class="widget-item-icon" onclick="location.href='#';" style="color:orange">
+							<div class="edu_color_boxes box_left">
+	    						<div class="edu_dash_box_data">
+	    							   <h4><b>Notifications</b></h4>
+	    							   <p><span><b>23</b></span></p>	
+	    						</div>
+	    						<div class="edu_dash_box_icon">
+									<i class="fa fa-cog" aria-hidden="true"></i>
+	    						</div>
+	    					</div>
+				        </div>
+					</div>
+					<div class="col-md-3 col-xs-12 col-lg-3 col-sm-3">
+						<div class="widget-item-icon" onclick="location.href='#';" style="color:blue">
+							<div class="edu_color_boxes box_left">
+	    						<div class="edu_dash_box_data">
+	    							   <h4><b>Schedule</b></h4>
+	    							   <p><span><b>13</b></span></p>	
+	    						</div>
+	    						<div class="edu_dash_box_icon">
+									<i class="fa fa-cog" aria-hidden="true"></i>
+	    						</div>
+	    					</div>                                     
+				        </div>
+					</div>
+					<div class="col-md-3 col-xs-12 col-lg-3 col-sm-3">
+						<div class="widget-item-icon" onclick="location.href='#';" style="color:green">
+							<div class="edu_color_boxes box_left">
+	    						<div class="edu_dash_box_data">
+	    							   <h4><b>Exams</b></h4>
+	    							   <p><span><b>300</b></span></p>	
+	    						</div>
+	    						<div class="edu_dash_box_icon">
+									<i class="fa fa-cog" aria-hidden="true"></i>
+	    						</div>
+	    					</div>                                      
+				        </div>
+					</div>
+				</div>
+					<div class="row">
+						<div class="col-md-3 col-xs-12 col-lg-3 col-sm-3">
+							<div class="widget-item-icon" onclick="location.href='#';" style="color:blue">
+								<div class="edu_color_boxes box_left">
+		    						<div class="edu_dash_box_data">
+		    							   <h4><b>Materials</b></h4>
+		    							   <p><span><b>1200</b></span></p>	
+		    						</div>
+		    						<div class="edu_dash_box_icon">
+										<i class="fa fa-cog" aria-hidden="true"></i>
+		    						</div>
+		    					</div>
+					        </div>
+						</div>
+						<div class="col-md-3 col-xs-12 col-lg-3 col-sm-3">
+							<div class="widget-item-icon" onclick="location.href='#';" style="color:red">
+								<div class="edu_color_boxes box_left">
+		    						<div class="edu_dash_box_data">
+		    							   <h4><b>Feedback</b></h4>
+		    							   <p><span><b>133</b></span></p>	
+		    						</div>
+		    						<div class="edu_dash_box_icon">
+										<i class="fa fa-cog" aria-hidden="true"></i>
+		    						</div>
+		    					</div>                                    
+					        </div>
+						</div>
+						<div class="col-md-3 col-xs-12 col-lg-3 col-sm-3">
+							<div class="widget-item-icon" onclick="location.href='#';" style="color:orange">
+								<div class="edu_color_boxes box_left">
+		    						<div class="edu_dash_box_data">
+		    							   <h4><b>Report your Problem</b></h4>
+		    							   <p><span><b>10</b></span></p>	
+		    						</div>
+		    						<div class="edu_dash_box_icon">
+										<i class="fa fa-cog" aria-hidden="true"></i>
+		    						</div>
+		    					</div>                                      
+					        </div>
+						</div> -->
+					</div>
 				</div><!-- /.row -->
-
- <!-- <h1>Google Calendar</h1>
-    <div>
-        <iframe src="https://calendar.google.com/calendar/embed?src=your_calendar_id&ctz=Your/Timezone"
-                style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
-    </div>  -->
-				<section class="edu_admin_content">  
-          <div class="">
-            <div class="">             
-                <div class="row">
-                  <div class="col-xl-12 col-lg-4 col-md-4 col-sm-12 col-12">
-                    
-                   <!--  <h1>Google Calendar</h1>
-    <div>
-        <iframe src="https://calendar.google.com/calendar/embed?src=your_calendar_id&ctz=Your/Timezone"
-                style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
-    </div> -->
-
-    <div class="container mt-5">
-
-    <div class="row">   
-    <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-9"> 
-    <h2 >Booking Calendar</h2>
-    </div>
-    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
-     <div class="arrows" style="padding:5%;margin-left:50px">
-     <button class="arrow left-arrow" onclick="goBack()">&#8592;</button> 
-     <button class="arrow right-arrow" onclick="goForward()">&#8594;</button>
-     </div>
-    </div>
-
-    </div>
-
-    <!-- Show flash message -->
-    
-
-    <div class="calendar table-container" id="calender_id">
-        
-    </div>
-
-    <div id="slotModal" class="modal" tabindex="-1" role="dialog">
-        
-    </div>
-</div>
-
-<script>
-    // Handle slot booking
-    $(document).on('click', '.date-cell .btn', function() {
-        var slotId = $(this).data('slot-id');
-        var currentDay = $(this).data('current-day');
-      var presentMonth=$("#present_month").val();
-        if (!$(this).hasClass('booked')) {
-            
-            $.ajax({
-            type: 'post',
-            url: '<?=base_url();?>user/get_model_popup_data',
-            data: {slot_id: slotId,current_day: currentDay,present_month: presentMonth},
-            beforeSend: function(xhr){
-              xhr.overrideMimeType("text/plain; charset=utf-8");
-              $("#wait").css("display", "block");
-            },
-            success: function(data){ 
-              //var json = $.parseJSON(data); 
-              //alert("OTP Send Successfully");
-              $("#slotModal").html(data);
-              $('#slot_id').val(slotId);
-              $('#slotModal').modal('show');
-            }
-          });
-        }
-    });
-</script>
-
-<script>
-    function goBack() {
-      //window.history.back();
-     
-      var value="back";
-      var present_month=$("#present_month").val();
-      var month= parseInt(present_month)-1;
-      if(month == 0){
-        var newMonth=12;
-      }else{
-        var newMonth=month;
-      }
-
-    $.ajax({
-            type: 'post',
-            url: '<?=base_url();?>user/get_calender_data',
-            data: {present_month: newMonth,value:value},
-            beforeSend: function(xhr){
-              xhr.overrideMimeType("text/plain; charset=utf-8");
-              $("#wait").css("display", "block");
-            },
-            success: function(data){ 
-              //var json = $.parseJSON(data); 
-              //alert("OTP Send Successfully");
-              $("#calender_id").html(data);
-            }
-          });
-
-    }
-
-    function goForward() {
-      //window.history.forward();
-
-      var value="next";
-      var present_month=$("#present_month").val();
-      var month= parseInt(present_month)+1;
-      if(month == 13){
-        var newMonth=1;
-      }else{
-        var newMonth=month;
-      }
-    $.ajax({
-            type: 'post',
-            url: '<?=base_url();?>user/get_calender_data',
-            data: {present_month: newMonth,value:value},
-            beforeSend: function(xhr){
-              xhr.overrideMimeType("text/plain; charset=utf-8");
-              $("#wait").css("display", "block");
-            },
-            success: function(data){ 
-              //var json = $.parseJSON(data); 
-              //alert("OTP Send Successfully");
-              $("#calender_id").html(data);
-            }
-          });
-    }
-
-    $(window).on('load', function() {
-      // Your jQuery function here
-      var value="present";
-      var present_month=<?php echo date('m') ?>;
-
-      $.ajax({
-            type: 'post',
-            url: '<?=base_url();?>user/get_calender_data',
-            data: {present_month: present_month,value:value},
-            beforeSend: function(xhr){
-              xhr.overrideMimeType("text/plain; charset=utf-8");
-              $("#wait").css("display", "block");
-            },
-            success: function(data){ 
-              //var json = $.parseJSON(data); 
-              //alert("OTP Send Successfully");
-              $("#calender_id").html(data);
-            }
-          });
-      //alert("Window is fully loaded!");
-    });
-  </script>
-                  </div>
-                  
-                  
-                </div>                    
-              </div>
-                  </div>
-       
-          </section>
 			</div><!-- /.col -->
 		</div><!-- /.row -->
 	</div><!-- /.page-content -->
