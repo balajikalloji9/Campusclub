@@ -52,28 +52,37 @@
 					</li>
 				
 					<li class="<?php if($uri=='all_students') echo 'active';?>">	
-						<a href="<?php echo site_url();?>admin/students/all">	
+						<a href="<?php echo site_url();?>admin/users">	
 							<i class="menu-icon blue fa fa-users bigger-120"></i> 
-							<span class="menu-text">All Registered Students</span>
+							<span class="menu-text">Users</span>
 						</a>	
 						<b class="arrow"></b>	
 				        </li>
 				
+				<li class="<?php if($uri=='sports') echo 'active';?>">
+								<a href="<?php echo site_url();?>admin/sports">
+									<i class="menu-icon fa fa-bar-chart blue"></i>	
+									 <span style="padding:3px">Sports</span>
+								</a>
+								<b class="arrow"></b>
+							</li>
 				<li class="<?php if($uri=='slots') echo 'active';?>">
 								<a href="<?php echo site_url();?>admin/slots">
 									<i class="menu-icon fa fa-calendar blue"></i>	
-									 <span style="padding:3px">Total Slots</span>
+									 <span style="padding:3px">Slots</span>
 								</a>
 								<b class="arrow"></b>
 							</li>
 
 				<li class="<?php if($uri=='slot_bookings') echo 'active';?>">
-								<a href="<?php echo site_url();?>admin/slot_bookings">
+								<a href="<?php echo site_url();?>admin/bookings">
 									<i class="menu-icon fa fa-bar-chart blue"></i>	
-									 <span style="padding:3px">Slot Bookings</span>
+									 <span style="padding:3px">Bookings</span>
 								</a>
 								<b class="arrow"></b>
 							</li>
+
+				
 				
 
 				
