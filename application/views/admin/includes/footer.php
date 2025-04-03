@@ -175,6 +175,15 @@ function showHelp(){
 				}).next().on(ace.click_event, function(){
 					$(this).prev().focus();
 				});
+
+				$('#timepicker2').timepicker({
+					minuteStep: 1,
+					showSeconds: true,
+					showMeridian: false
+				}).next().on(ace.click_event, function(){
+					$(this).prev().focus();
+				});
+
 				
 				$('#date-timepicker1').datetimepicker().next().on(ace.click_event, function(){
 					$(this).prev().focus();
