@@ -4,21 +4,22 @@
 
 class Dashboard_model extends CI_Model {
 
-	public function get_students_count(){
+	public function get_users_count(){
 
 	    $this->db->select('id');
-        $this->db->from('students');
+        $this->db->from('users');
         $query=$this->db->get();
         $result=$query->num_rows();
         return $result;
     }
 
-    public function get_batchs_count(){
+    public function get_sports(){
 
-	    $this->db->select('id');
-        $this->db->from('batchs');
+	    $this->db->select('*');
+        $this->db->from('sports');
+        $this->db->where('status','Active');
         $query=$this->db->get();
-        $result=$query->num_rows();
+        $result=$query->result_array();
         return $result;
     }
 
