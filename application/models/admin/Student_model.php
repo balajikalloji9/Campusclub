@@ -1,84 +1,122 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
- 
-class Login_model extends CI_Model {
+<!DOCTYPE html>
+<html>
 
+<head>
+    <title>Online</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="./../fonts/css/all.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #17a2b8;
+            height: 100vh;
+        }
 
-	public $users = 'admins';
+        #login .container #login-row #login-column #login-box {
+            margin-top: 70px;
+            max-width: 500px;
+            height: 470px;
+            border: 1px solid #9C9C9C;
+            background-color: #EAEAEA;
+        }
 
-	public function __construct()
+        #login .container #login-row #login-column #login-box #login-form {
+            padding: 50px;
+        }
 
-	{
+        /* #login .container #login-row #login-column #login-box #login-form #register-link {
+            margin-top: 85px;
+        } */
 
-		parent::__construct();
+        /* .text-right {
+            margin-left: 60%;
+        } */
+    </style>
+</head>
+<body>
+    <div id="login">
+        <div class="container">
+            <div id="login-row" class="row justify-content-center align-items-center">
+                <div id="login-column" class="col-md-6">
+                    <div id="login-box" class="col-md-12">
+                        <form id="login-form" class="form" action="<?php echo base_url('user')?>" method="post">
+                            <img src="./storage/admin.png" width="25%" alt="" style="border-radius: 20px;margin-left: 130px;margin-bottom: 20px;">
 
-	
+                            
 
-	}
+                            <h3 class="text-center text-info">User Login</h3>
 
-	public function checkUserEmailAndUserID($user_email){
-		$where="(email = '".$user_email."' AND status='Active') OR (admin_id = '".$user_email."' AND status='Active')";
-		$this->db->select('id,type');
-		$this->db->from($this->users);
-		$this->db->where($where);
-		$result=$this->db->get();
-		$result=$result->num_rows();
-		//echo $this->db->last_query();exit;
-		return $result;
-	}
+                            <?php if( $this->session->flashdata( 'message' ) ) { ?>
+                                            <span style="color:#F00; font-size:12px; font-weight:bold; text-align:center;">
+                                                <?php echo $this->session->flashdata( 'message' ); ?>
+                                            </span> 
+                                        <?php  }else if( $this->session->flashdata( 'messages' ) ) { ?>
+                                            <span style="color:green; font-size:12px; font-weight:bold; text-align:center;">
+                                                <?php echo $this->session->flashdata( 'messages' ); ?>
+                                            </span> 
+                                        <?php  }else{ ?>
+                                  
+                 <?php } //print_r($this->session->all_userdata());?>
+                                        <?php if(isset($error)) echo $error;?>
+                            <div class="form-group">
+                                <label for="username" class="text-info">Email:</label><br>
+                                <input type="text" name="user_email" id="user_email" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="password" class="text-info">Password:</label><br>
+                                <input type="password" name="password" id="password" class="form-control">
+                            </div>
+                            <!-- <div class="form-group">
+                                
+                                <label for="remember-me" class="">
+    <button class="btn btn-info" style="margin-right: 260px;" 
+            onclick="window.location.href='<?php echo base_url('user/registration') ?>';">
+        <span>Click to Register</span>
+    </button>
+</label>
 
+                                
+                        
+                                
+                                <input type="submit" name="Submit" value="submit" class="btn btn-info" style="margin-left: 260px;"/>
+                            
+                            </div> -->
+                            <div class="form-group" style="display: flex; justify-content: space-between; align-items: center;">
+    <!-- Registration button -->
+    <button class="btn btn-info">
+<a href="#" onclick="reg_link()" style="color: white; text-decoration: none;">
+        <span>Click to Register</span>
+    </a>
+</button>
+    
+    <!-- Submit button -->
+    <input type="submit" name="Submit" value="submit" class="btn btn-info"/>
+</div>                           
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
 
-	public function checkUserEmailPassword($user_email,$password){
-		$encode_password=md5($password);
+  <script type="text/javascript">
 
-		$where="(email = '".$user_email."' AND status='Active' AND password='".$encode_password."') OR (admin_id = '".$user_email."' AND status='Active' AND password='".$encode_password."')";
-		$this->db->select('id,admin_id,type,username,email,password,status,login_time');
-		$this->db->from($this->users);
-		$this->db->where($where);
-		$query=$this->db->get(); 
-		$num_rows=$query->num_rows();
-		$result = $query->row_array();
-		//echo '<pre>';print_ln($this->db->);exit;
-		//echo $this->db->last_query();exit;
-		if($result){
-				//set session values here
-				$this->session->set_userdata('admin_id', $result['admin_id']);
-				$this->session->set_userdata('username', $result['username']);
-				$this->session->set_userdata('type', $result['type']);
-				
-				$this->session->set_userdata('ip_address', $_SERVER['REMOTE_ADDR']);
-				$this->session->set_userdata('logged_in', "CampusClubMS");
-				$this->session->set_userdata('last_logged_in', $result['login_time']);
-				$this->session->set_userdata('login_date_time',date('Y-m-d H:i:s'));								 
-				$this->session->set_userdata('login_state', TRUE);
-				//$user_data = $this->session->all_userdata();
-				
-			}
-		return $result;
-		
-	}
+   var url = "<?php echo base_url('user/registration'); ?>";
 
-	public function update_admin_logintime($login_time,$admin_id){
-		
-		$login_st_data = array(
-			'login_time'      => $login_time,  
-		);
-		//echo '<pre>';print_r($login_st_data);exit;
-		$this->db->where('admin_id',$admin_id);
-		$admin_result=$this->db->update($this->users, $login_st_data);
-		return $admin_result;
-	}
+   function reg_link(){
 
-	public function logout_time()
-	{
-		$login_st_data = array(
-			'logout_time'      => date('Y-m-d H:i:s'),  
-		);
-		
-		$this->db->where('admin_id',$this->session->userdata('admin_id'));
-		$admin_result=$this->db->update($this->users, $login_st_data);
-		//echo $this->db->last_query();exit;
-		return $admin_result;
-	}
-}
+    //alert();
+    window.open('<?php echo base_url('user/registration'); ?>');
 
-?>
+//window.location.href = '<?php echo base_url('user/registration'); ?>';
+   }
+
+</script>
