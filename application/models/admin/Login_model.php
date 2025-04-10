@@ -1,84 +1,150 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
- 
-class Login_model extends CI_Model {
-
-
-	public $users = 'admins';
-
-	public function __construct()
-
-	{
-
-		parent::__construct();
-
+<!-- footer -->
+    <footer class="">
+        <div class="container-fluid W3Layouts">
+            
+            <div class="W3Layouts-footer-grids row">
+              <div class="col-md-12 col-lg-12 mt-lg-0 mt-5 W3Layouts-footer-grid center"><br><br><br>
+                    <!-- <h4 class="W3Layouts">Copy Rights</h4> -->
+                    <p class="W3Layouts" style="color:black">&copy; 2025 Campus Club Managment System | All Rights Reserved </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- //footer -->
 	
+    <!-- move top -->
+    <button onclick="topFunction()" id="movetop" title="Go to top">
+        <span class="fa fa-angle-up"></span>
+    </button>
+    <script>
+        // When the user scrolls down 20px from the top of the document, show the button
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("movetop").style.display = "block";
+          } else {
+            document.getElementById("movetop").style.display = "none";
+          }
+        }
+        
+        // When the user clicks on the button, scroll to the top of the document
+        function topFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+        </script>
+    <!-- /move top -->
 
-	}
+	<!-- requires js files -->
+    <script src='<?php echo base_url();?>assets/admin/js/jquery.min.js'>"+"<"+"/script>
+    <script src="<?php echo base_url()?>assets/website/js/jquery-3.4.1.min.js"></script>
+    <script src="<?php echo base_url()?>assets/website/js/bootstrap.js"></script>
+        <script type="text/javascript" src="<?php echo base_url();?>assets/admin/js/jquery.toast.js"></script>
 
-	public function checkUserEmailAndUserID($user_email){
-		$where="(email = '".$user_email."' AND status='Active') OR (admin_id = '".$user_email."' AND status='Active')";
-		$this->db->select('id,type');
-		$this->db->from($this->users);
-		$this->db->where($where);
-		$result=$this->db->get();
-		$result=$result->num_rows();
-		//echo $this->db->last_query();exit;
-		return $result;
-	}
+        <script type="text/javascript" src="<?php echo base_url(); ?>assets/admin/js/bootbox.min.js"></script>
+        
+        <script type="text/javascript" src="<?php echo base_url(); ?>assets/admin/js/check_validation.js"></script>
+        
+
+</body>
 
 
-	public function checkUserEmailPassword($user_email,$password){
-		$encode_password=md5($password);
+<?php
+if($this->session->flashdata('success')!='')
 
-		$where="(email = '".$user_email."' AND status='Active' AND password='".$encode_password."') OR (admin_id = '".$user_email."' AND status='Active' AND password='".$encode_password."')";
-		$this->db->select('id,admin_id,type,username,email,password,status,login_time');
-		$this->db->from($this->users);
-		$this->db->where($where);
-		$query=$this->db->get(); 
-		$num_rows=$query->num_rows();
-		$result = $query->row_array();
-		//echo '<pre>';print_ln($this->db->);exit;
-		//echo $this->db->last_query();exit;
-		if($result){
-				//set session values here
-				$this->session->set_userdata('admin_id', $result['admin_id']);
-				$this->session->set_userdata('username', $result['username']);
-				$this->session->set_userdata('type', $result['type']);
-				
-				$this->session->set_userdata('ip_address', $_SERVER['REMOTE_ADDR']);
-				$this->session->set_userdata('logged_in', "CampusClubMS");
-				$this->session->set_userdata('last_logged_in', $result['login_time']);
-				$this->session->set_userdata('login_date_time',date('Y-m-d H:i:s'));								 
-				$this->session->set_userdata('login_state', TRUE);
-				//$user_data = $this->session->all_userdata();
-				
-			}
-		return $result;
-		
-	}
+{
 
-	public function update_admin_logintime($login_time,$admin_id){
-		
-		$login_st_data = array(
-			'login_time'      => $login_time,  
-		);
-		//echo '<pre>';print_r($login_st_data);exit;
-		$this->db->where('admin_id',$admin_id);
-		$admin_result=$this->db->update($this->users, $login_st_data);
-		return $admin_result;
-	}
+$msg=$this->session->flashdata('success');
 
-	public function logout_time()
-	{
-		$login_st_data = array(
-			'logout_time'      => date('Y-m-d H:i:s'),  
-		);
-		
-		$this->db->where('admin_id',$this->session->userdata('admin_id'));
-		$admin_result=$this->db->update($this->users, $login_st_data);
-		//echo $this->db->last_query();exit;
-		return $admin_result;
-	}
+$heading='Success';
+
+$icon='success';
+
+}
+
+else if($this->session->flashdata('error')!=''){
+
+$msg=$this->session->flashdata('error');
+
+$heading='Error';
+
+$icon='error';
+
+}
+
+else if(isset($error) && $error!=''){
+
+$msg=$error;
+
+$heading='Error';
+
+$icon='error';
+
+}
+
+else if(isset($success) && $success!=''){
+
+$msg=$success;
+
+$icon='success';
+
+$heading='Success';
+
 }
 
 ?>
+
+<script type="text/javascript">
+
+jQuery(function($) {
+    
+<?php if($msg!=''){?>
+
+    $.toast({
+
+    heading: '<?php echo $heading;?>',
+
+    text: '<?php echo $msg;?>',
+
+    showHideTransition: 'fade',
+
+    position: 'top-center',
+
+    icon: '<?php echo $icon;?>'
+
+    });
+
+<?php } ?>
+
+
+
+});
+
+</script>
+
+
+
+<style type="text/css">
+
+  .td_action
+
+  {
+
+    width: 100px;
+
+  }
+
+  .td_action_extra
+
+  {
+
+    width: 135px;
+
+  }
+
+</style>
+
+
+</html>
+
